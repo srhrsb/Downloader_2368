@@ -42,7 +42,7 @@ public class Download extends Thread{
             while((readByte = buffInputStream.read(buffer, 0, 1024)) >= 0){
                 buffOutputStream.write(buffer, 0, readByte);
                 downloaded += readByte;
-                System.out.println("Runtergeladen: "+downloaded);
+                System.out.println("Runtergeladen("+this+"): "+downloaded);
             }
             buffOutputStream.close();
             buffInputStream.close();

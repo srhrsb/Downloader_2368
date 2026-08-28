@@ -5,6 +5,8 @@ module com.brh.downloader_2368 {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires javafx.graphics;
+    requires javafx.base;
 
     opens com.brh.downloader_2368 to javafx.fxml;
     exports com.brh.downloader_2368;

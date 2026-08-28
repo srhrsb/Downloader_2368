@@ -3,20 +3,31 @@ package com.brh.downloader_2368;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Controller {
 
     @FXML
     private VBox downloadItemContainer;
-
     @FXML
     private TextField targetTf;
+
+    private ArrayList<DownloadItem> downloadItemList;
+
+    @FXML
+    private void initialize(){
+        downloadItemList = new ArrayList<>();
+    }
 
     /**
      * Fügt ein neues Textfeld zur Url-Eingabe hinzu
@@ -24,10 +35,7 @@ public class Controller {
      */
     @FXML
     private void onAddDownloader( ActionEvent event ) {
-
-        TextField textField = new TextField();
-        downloadItemContainer.getChildren().add(textField);
-
+      downloadItemList.add( new DownloadItem( downloadItemContainer ));
     }
 
     /**
@@ -59,14 +67,9 @@ public class Controller {
     @FXML
     private void onDownload(ActionEvent event) {
 
-        for( Node n : downloadItemContainer.getChildren()){
-
-            TextField tf = (TextField) n;
-            String pathName = tf.getText();
-            System.out.println(pathName);
-
+        for( DownloadItem downloadItem : downloadItemList){
             String target = targetTf.getText();
-            Download download = new Download(pathName, target );
+            Download download = new Download(downloadItem.getUrl(), target );
             download.start();
         }
     }
