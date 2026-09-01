@@ -7,13 +7,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import java.util.function.Consumer;
+
 public class DownloadItem {
 
     private VBox parent;
     private TextField textField;
+    private Consumer<DownloadItem> onDeleteCallback;
 
-    public DownloadItem( VBox parent){
+    public DownloadItem( VBox parent, Consumer<DownloadItem> onDeleteCallback){
         this.parent = parent;
+        this.onDeleteCallback = onDeleteCallback;
         init();
     }
 
@@ -34,6 +38,7 @@ public class DownloadItem {
     private void deleteDownloadItem( ActionEvent event ){
         Button delButton = (Button)event.getTarget();
         parent.getChildren().remove( delButton.getParent() );
+        onDeleteCallback.accept(this);
     }
 
     public String getUrl(){

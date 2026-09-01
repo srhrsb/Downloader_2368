@@ -1,0 +1,142 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.brh.downloader_2368.Controller",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_97816 { 
+   	label=brh
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_328447049 { 
+   	label=downloader_2368
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Controller305428534[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Controller</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   downloadItemContainer: VBox [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   downloadItemList: ArrayList&lt;DownloadItem&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   targetTf: TextField [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ deleteItem(item: DownloadItem)</TD></TR>
+<TR><TD ALIGN="LEFT" >- initialize()</TD></TR>
+<TR><TD ALIGN="LEFT" >- onAddDownloader(event: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onDownload(event: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onSearch(event: ActionEvent)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DownloadItem305428534[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DownloadItem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   onDeleteCallback: Consumer&lt;DownloadItem&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   parent: VBox [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   textField: TextField [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- deleteDownloadItem(event: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- init()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+Controller305428534 -> DownloadItem305428534[label="downloadItemList
+[0..*]"];
+    
+}
+@enduml

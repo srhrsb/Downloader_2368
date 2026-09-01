@@ -29,13 +29,17 @@ public class Controller {
         downloadItemList = new ArrayList<>();
     }
 
+    public void deleteItem( DownloadItem item){
+        downloadItemList.remove(item);
+    }
+
     /**
      * Fügt ein neues Textfeld zur Url-Eingabe hinzu
      * @param event Clickevent des Button "+Download"
      */
     @FXML
     private void onAddDownloader( ActionEvent event ) {
-      downloadItemList.add( new DownloadItem( downloadItemContainer ));
+      downloadItemList.add( new DownloadItem( downloadItemContainer, this::deleteItem ));
     }
 
     /**
