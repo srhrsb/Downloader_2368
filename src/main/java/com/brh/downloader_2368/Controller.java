@@ -73,7 +73,7 @@ public class Controller {
 
         for( DownloadItem downloadItem : downloadItemList){
             String target = targetTf.getText();
-            Download download = new Download(downloadItem.getUrl(), target );
+            Download download = new Download(downloadItem.getUrl(), target, downloadItem::updateProgress );
             download.start();
         }
     }
