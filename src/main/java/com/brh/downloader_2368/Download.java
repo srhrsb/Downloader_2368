@@ -12,12 +12,24 @@ public class Download extends Thread{
     private File outputFile;
     private Consumer<Long> onProgress;
 
+    /**
+     * Konstruktor
+     * @param link Url die runtergeladen werden soll
+     * @param target Pfad des Zielordners
+     * @param onProgress Callback der regelmäßig während des Download
+     *                   den Fortschritt updatet
+     */
     public Download(String link, String target, Consumer<Long> onProgress) {
         this.link = link;
         this.target = target;
         this.onProgress = onProgress;
     }
 
+    /**
+     * Geerbte Methode von Threads wird intern vom Thread aufgerufen
+     * wenn thread.start() aufgerufen wird.
+     * Führt den Download durch
+     */
     @Override
     public void run(){
         try{

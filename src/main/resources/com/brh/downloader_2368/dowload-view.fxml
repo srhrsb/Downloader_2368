@@ -11,7 +11,17 @@
    <children>
       <HBox prefHeight="306.0" prefWidth="579.0" spacing="5.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onAddDownloader" prefHeight="26.0" prefWidth="118.0" text="+Download" />
+             <VBox spacing="5.0">
+                 <children>
+
+                     <Button mnemonicParsing="false" onAction="#onAddDownloader"
+                             prefHeight="26.0" prefWidth="118.0" text="+Download" />
+
+                     <Button mnemonicParsing="false" fx:id="toggleDownloadBtn"
+                             onAction="#onToggleDownload" prefHeight="26.0"
+                             prefWidth="118.0" text="Download anhalten" />
+                 </children>
+             </VBox>
             <VBox fx:id="downloadItemContainer" prefHeight="226.0" prefWidth="454.0" style="-fx-background-color: grey;" />
          </children>
       </HBox>

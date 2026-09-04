@@ -21,14 +21,26 @@ public class Controller {
     private VBox downloadItemContainer;
     @FXML
     private TextField targetTf;
+    @FXML
+    private Button toggleDownloadBtn;
 
     private ArrayList<DownloadItem> downloadItemList;
 
+    /**
+     * Ersatz für den Konstruktor in JavaFX - Controllern
+     * für initiale Anweisungen
+     * Erstellt/Initialisiert die Liste zum Speichern
+     * der DownloadItems
+     */
     @FXML
     private void initialize(){
         downloadItemList = new ArrayList<>();
     }
 
+    /**
+     * Löscht die Liste des DownloadItems im Controller
+     * @param item DownloadItem das gelöscht werden soll
+     */
     public void deleteItem( DownloadItem item){
         downloadItemList.remove(item);
     }
@@ -76,5 +88,10 @@ public class Controller {
             Download download = new Download(downloadItem.getUrl(), target, downloadItem::updateProgress );
             download.start();
         }
+    }
+
+    @FXML
+    private void onToggleDownload(ActionEvent event) {
+
     }
 }

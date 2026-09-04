@@ -21,12 +21,20 @@ public class DownloadItem {
     private Label downloadProgressLabel;
     private Consumer<DownloadItem> onDeleteCallback;
 
+    /**
+     * Konstruktor um den Parentcontainer, onDeleteCallback zuzuweisen
+     * @param parent Container für DownloadItems (UI)
+     * @param onDeleteCallback callback im Falle des Löschens
+     */
     public DownloadItem( VBox parent, Consumer<DownloadItem> onDeleteCallback){
         this.parent = parent;
         this.onDeleteCallback = onDeleteCallback;
         init();
     }
 
+    /**
+     * Erstellen der Bedienelemente und einbringen in die Oberfläche
+     */
     private void init(){
         HBox hbox = new HBox();
         textField = new TextField();
@@ -48,16 +56,29 @@ public class DownloadItem {
         delButton.setOnAction( this::deleteDownloadItem );
     }
 
+    /**
+     * Clickevent wenn Delete-Button gedrückt wird
+     * @param event Clickevent des Buttons
+     */
     private void deleteDownloadItem( ActionEvent event ){
         Button delButton = (Button)event.getTarget();
         parent.getChildren().remove( delButton.getParent() );
         onDeleteCallback.accept(this);
     }
 
+    /**
+     * Get Methode für den Donwloadlink aus dem Textfeld
+     * @return Url
+     */
     public String getUrl(){
         return textField.getText();
     }
 
+    /**
+     * Aktualisiert den Download-Fortschritt von diesem
+     * DownloadItem
+     * @param downloadedBytes Long Anzahl der bytes
+     */
     public void updateProgress( Long downloadedBytes ){
         //ToDo: verwendete Syntax => Lambda Expression
         //      besser erklären -> KW38
