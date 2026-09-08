@@ -26,6 +26,10 @@ public class Controller {
 
     private ArrayList<DownloadItem> downloadItemList;
 
+    private ArrayList<Download> downloadList;
+
+    private boolean isDownloading;
+
     /**
      * Ersatz für den Konstruktor in JavaFX - Controllern
      * für initiale Anweisungen
@@ -35,6 +39,8 @@ public class Controller {
     @FXML
     private void initialize(){
         downloadItemList = new ArrayList<>();
+        downloadList = new ArrayList<>();
+        toggleDownloadBtn.setDisable(true);
     }
 
     /**
@@ -83,9 +89,12 @@ public class Controller {
     @FXML
     private void onDownload(ActionEvent event) {
 
+        isDownloading = true;
+        toggleDownloadBtn.setDisable(false);
         for( DownloadItem downloadItem : downloadItemList){
             String target = targetTf.getText();
             Download download = new Download(downloadItem.getUrl(), target, downloadItem::updateProgress );
+            downloadList.add(download);
             download.start();
         }
     }
@@ -93,5 +102,46 @@ public class Controller {
     @FXML
     private void onToggleDownload(ActionEvent event) {
 
+         isDownloading = !isDownloading;
+         System.out.println(isDownloading);
+
+         //ToDo: Unterscheidung download anhalten oder weiterlaufen lassen
+         //      und dazu jeweils die Button Beschriftung ändern
+
+        setToggleDownloadBtnLabel(isDownloading);
+
+        if(isDownloading){
+            try {
+                stopAllDownloads();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{
+            resumeAllDownloads();
+        }
     }
+
+    private void setToggleDownloadBtnLabel(boolean isDownloading) {
+        if(isDownloading){
+            toggleDownloadBtn.setText("anhalten");
+        }
+        else{
+            toggleDownloadBtn.setText("fortsetzen");
+        }
+    }
+
+    private void stopAllDownloads() throws InterruptedException {
+        for(  var download : downloadList){
+            if(download.isAlive()) {
+                download.wait();
+            }
+        }
+    }
+
+    private void resumeAllDownloads(){
+        notifyAll();
+    }
+
+
 }

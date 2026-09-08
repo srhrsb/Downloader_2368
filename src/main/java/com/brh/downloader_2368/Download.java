@@ -51,10 +51,10 @@ public class Download extends Thread{
             OutputStream outputStream = new FileOutputStream(outputFile);
             BufferedOutputStream buffOutputStream =new BufferedOutputStream( outputStream , 1024);
 
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1];
             long downloaded = 0;
             int readByte = 0;
-            while((readByte = buffInputStream.read(buffer, 0, 1024)) >= 0){
+            while((readByte = buffInputStream.read(buffer, 0, 1)) >= 0){
                 buffOutputStream.write(buffer, 0, readByte);
                 downloaded += readByte;
                 onProgress.accept(downloaded);
