@@ -10,6 +10,8 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Stage currentStage;
+    private static Controller currentController;
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("dowload-view.fxml"));
@@ -18,9 +20,15 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
         currentStage = stage;
+        currentController = fxmlLoader.getController();
     }
 
     public static Stage getStage(){
        return currentStage;
     }
+
+    public static Controller getController(){
+        return currentController;
+    }
+
 }

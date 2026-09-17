@@ -24,8 +24,6 @@ public class Controller {
 
     private ArrayList<DownloadItem> downloadItemList;
 
-
-
     /**
      * Ersatz für den Konstruktor in JavaFX - Controllern
      * für initiale Anweisungen
@@ -51,7 +49,16 @@ public class Controller {
      */
     @FXML
     private void onAddDownloader( ActionEvent event ) {
-      downloadItemList.add( new DownloadItem( downloadItemContainer, this::deleteItem ));
+      downloadItemList.add( new DownloadItem( downloadItemContainer, this::deleteItem, this::singleDownload ));
+    }
+
+    public String getTextOfLastDownloadItem(){
+
+        if(downloadItemList.isEmpty()) return "";
+        DownloadItem lastItem = downloadItemList.getLast();
+        String lastUrl = lastItem.getUrl();
+
+        return lastUrl;
     }
 
     /**
@@ -83,12 +90,25 @@ public class Controller {
     @FXML
     private void onDownload(ActionEvent event) {
 
-
         for( DownloadItem downloadItem : downloadItemList){
-            String target = targetTf.getText();
-            Download download = new Download(downloadItem.getUrl(), target, downloadItem::updateProgress );
-            download.start();
+            singleDownload(downloadItem);
         }
+    }
+
+    /**
+     * Veranlasst einen einzelnen Download
+     * @param downloadItem
+     */
+    private void singleDownload( DownloadItem downloadItem){
+        String target = targetTf.getText();
+
+        if( target.isBlank() ) {
+            DialogUtils.showErrorDialog("Fehler", "Es wurde kein Zielordner angegeben");
+            return;
+        }
+
+        Download download = new Download(downloadItem.getUrl(), target, downloadItem::updateProgress );
+        download.start();
     }
 
 

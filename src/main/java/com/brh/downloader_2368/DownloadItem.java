@@ -20,15 +20,17 @@ public class DownloadItem {
     private TextField textField;
     private Label downloadProgressLabel;
     private Consumer<DownloadItem> onDeleteCallback;
+    private Consumer<DownloadItem> onSingleDownloadCallback;
 
     /**
      * Konstruktor um den Parentcontainer, onDeleteCallback zuzuweisen
      * @param parent Container für DownloadItems (UI)
      * @param onDeleteCallback callback im Falle des Löschens
      */
-    public DownloadItem( VBox parent, Consumer<DownloadItem> onDeleteCallback){
+    public DownloadItem( VBox parent, Consumer<DownloadItem> onDeleteCallback, Consumer<DownloadItem> onSingleDownloadCallback ){
         this.parent = parent;
         this.onDeleteCallback = onDeleteCallback;
+        this.onSingleDownloadCallback = onSingleDownloadCallback;
         init();
     }
 
@@ -39,6 +41,9 @@ public class DownloadItem {
         HBox hbox = new HBox();
         textField = new TextField();
 
+        String lastUrl = App.getController().getTextOfLastDownloadItem();
+        textField.setText(lastUrl);
+
         downloadProgressLabel = new Label("0");
         downloadProgressLabel .setMinWidth(100);
         downloadProgressLabel .setFont(new Font(16));
@@ -47,13 +52,18 @@ public class DownloadItem {
         Button delButton = new Button("🗑");
         HBox.setHgrow(textField, Priority.ALWAYS);
 
+        Button downloadButton = new Button("DL");
+
         parent.getChildren().add(hbox);
 
         hbox.getChildren().add(textField);
         hbox.getChildren().add(delButton);
+        hbox.getChildren().add(downloadButton);
         hbox.getChildren().add(downloadProgressLabel );
 
         delButton.setOnAction( this::deleteDownloadItem );
+        downloadButton.setOnAction( this::singleDownload );
+
     }
 
     /**
@@ -64,6 +74,10 @@ public class DownloadItem {
         Button delButton = (Button)event.getTarget();
         parent.getChildren().remove( delButton.getParent() );
         onDeleteCallback.accept(this);
+    }
+
+    private void singleDownload( ActionEvent event ){
+           onSingleDownloadCallback.accept(this);
     }
 
     /**
