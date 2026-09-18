@@ -14,6 +14,8 @@ import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controller {
 
@@ -23,6 +25,7 @@ public class Controller {
     private TextField targetTf;
 
     private ArrayList<DownloadItem> downloadItemList;
+    private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
 
     /**
      * Ersatz für den Konstruktor in JavaFX - Controllern
@@ -33,6 +36,7 @@ public class Controller {
     @FXML
     private void initialize(){
         downloadItemList = new ArrayList<>();
+        LOGGER.addHandler( App.getLogFileHandler() );
     }
 
     /**
@@ -79,6 +83,10 @@ public class Controller {
 
        if(file != null){ // objekt ist gültig
            targetTf.setText(file.getAbsolutePath());
+           LOGGER.log(Level.INFO, "Zielordner für Downloads per Dialog ausgewählt");
+       }
+       else{
+           LOGGER.log(Level.INFO, "Auswahl Zielordner abgebrochen");
        }
     }
 
@@ -104,6 +112,7 @@ public class Controller {
 
         if( target.isBlank() ) {
             DialogUtils.showErrorDialog("Fehler", "Es wurde kein Zielordner angegeben");
+            LOGGER.log(Level.WARNING, "Kein Zielordner - Download kann nicht durchgeführt werden");
             return;
         }
 

@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DownloadItem {
 
@@ -21,6 +23,7 @@ public class DownloadItem {
     private Label downloadProgressLabel;
     private Consumer<DownloadItem> onDeleteCallback;
     private Consumer<DownloadItem> onSingleDownloadCallback;
+    private static final Logger LOGGER = Logger.getLogger(DownloadItem.class.getName());
 
     /**
      * Konstruktor um den Parentcontainer, onDeleteCallback zuzuweisen
@@ -63,6 +66,7 @@ public class DownloadItem {
 
         delButton.setOnAction( this::deleteDownloadItem );
         downloadButton.setOnAction( this::singleDownload );
+        LOGGER.log(Level.INFO, "UserInterface ist erstellt");
 
     }
 
@@ -71,6 +75,13 @@ public class DownloadItem {
      * @param event Clickevent des Buttons
      */
     private void deleteDownloadItem( ActionEvent event ){
+        boolean confirm = DialogUtils.showConfirmDialog("Bitte Bestätigen", "Wollen Sie wirklich dieses Item löschen?");
+
+        if(!confirm){
+            LOGGER.log(Level.INFO, "Löschen des Items durch Nutzer abgebrochen");
+            return;
+        }
+
         Button delButton = (Button)event.getTarget();
         parent.getChildren().remove( delButton.getParent() );
         onDeleteCallback.accept(this);

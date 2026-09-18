@@ -38,11 +38,11 @@ config=StructureConfiguration;
     "cutEnum": true,
     "cutTests": true,
     "cutClient": true,
-    "cutDataAccess": true,
-    "cutInterfaceStructures": true,
-    "cutDataStructures": true,
-    "cutGetterAndSetter": true,
-    "cutConstructors": true
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": false,
+    "cutConstructors": false
   },
   "graphTraversal": {
     "forwardDepth": 3,
@@ -95,7 +95,21 @@ subgraph cluster_97816 {
 	fillcolor="#d8d8d8"
 	style=filled
    
-   Controller305428534[
+   App305428534[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)App</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getController(): Controller</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStage(): Stage</TD></TR>
+<TR><TD ALIGN="LEFT" >+ start(stage: Stage)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Controller305428534[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)Controller</TD></TR>
 <HR/>
@@ -104,6 +118,7 @@ subgraph cluster_97816 {
 <TR><TD ALIGN="LEFT" >-   targetTf: TextField [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ deleteItem(item: DownloadItem)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTextOfLastDownloadItem(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >- initialize()</TD></TR>
 <TR><TD ALIGN="LEFT" >- onAddDownloader(event: ActionEvent)</TD></TR>
 <TR><TD ALIGN="LEFT" >- onDownload(event: ActionEvent)</TD></TR>
@@ -115,16 +130,38 @@ subgraph cluster_97816 {
 	fillcolor="#FFFFFF"
 ];
 
+Download305428534[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Download</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   link: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onProgress: Consumer&lt;Long&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   outputFile: File [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   target: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Download(link: String, target: String, onProgress: Consumer&lt;Long&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
 DownloadItem305428534[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)DownloadItem</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   downloadProgressLabel: Label [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   onDeleteCallback: Consumer&lt;DownloadItem&gt; [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   parent: VBox [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   textField: TextField [0..1]</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >+ DownloadItem(parent: VBox, onDeleteCallback: Consumer&lt;DownloadItem&gt;)</TD></TR>
 <TR><TD ALIGN="LEFT" >- deleteDownloadItem(event: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getUrl(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >- init()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProgress(downloadedBytes: Long)</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -135,8 +172,12 @@ DownloadItem305428534[
 } 
 
 'edges    
+Controller305428534 -> App305428534[label="onSearch() -> getStage()"];
+Controller305428534 -> Download305428534[label="onDownload() -> Download()"];
 Controller305428534 -> DownloadItem305428534[label="downloadItemList
 [0..*]"];
+DownloadItem305428534 -> App305428534[label="init() -> getController()"];
+DownloadItem305428534 -> Controller305428534[label="init() -> getTextOfLastDownloadItem()"];
     
 }
 @enduml

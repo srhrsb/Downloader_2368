@@ -7,6 +7,11 @@ import java.util.Optional;
 
 public class DialogUtils {
 
+    /**
+     * Zeigt Infofenster an
+     * @param title Fenstertitel
+     * @param text Nachricht
+     */
     public static void showInfoDialog(String title, String text){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -15,6 +20,11 @@ public class DialogUtils {
         alert.showAndWait();
     }
 
+    /**
+     * Zeigt Fehlerfenster an
+     * @param title Fenstertitel
+     * @param text Nachricht
+     */
     public static void showErrorDialog(String title, String text){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -23,6 +33,12 @@ public class DialogUtils {
         alert.showAndWait();
     }
 
+    /**
+     * Zeigt Bestätigungsfenster an
+     * @param title Fenstertitel
+     * @param text Nachricht
+     * @return result Boolean für Zustimmung
+     */
     public static boolean showConfirmDialog(String title, String text){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
