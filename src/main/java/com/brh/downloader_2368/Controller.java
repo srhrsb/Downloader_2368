@@ -83,6 +83,7 @@ public class Controller {
 
        if(file != null){ // objekt ist gültig
            targetTf.setText(file.getAbsolutePath());
+           DialogUtils.showInfoDialog("Info", "Zielordner für Downloads ausgesucht.");
            LOGGER.log(Level.INFO, "Zielordner für Downloads per Dialog ausgewählt");
        }
        else{
