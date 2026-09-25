@@ -6,4 +6,8 @@ public class MathUtility {
         return v1 + v2;
     }
 
+    public double multiply( double v1, double v2){
+        return v1 * v2;
+    }
+
 }

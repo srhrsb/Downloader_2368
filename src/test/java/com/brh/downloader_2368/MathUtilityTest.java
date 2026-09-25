@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MathUtilityTest {
 
+
+
     @Test
     void addNumbers() {
 
@@ -24,5 +26,16 @@ class MathUtilityTest {
                 () ->  assertTrue( math.addNumbers(10, 1)>0)
         );
 
+    }
+
+    @Test
+    void multiply() {
+        MathUtility math = new MathUtility();
+
+        assertAll(
+                () ->  assertEquals(8, math.multiply(8, 1.0) ) ,
+                () ->  assertEquals(-20, math.multiply(10, -2)),
+                () ->  assertEquals( 0, math.multiply(1, 0))
+        );
     }
 }
