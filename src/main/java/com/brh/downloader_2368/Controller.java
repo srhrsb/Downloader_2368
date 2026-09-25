@@ -121,6 +121,20 @@ public class Controller {
         download.start();
     }
 
+    @FXML
+    private void onSupport(ActionEvent event) {
+        DialogUtils.showInfoDialog("Support", "Wenden Sie sich bei Problemen bitte an support@firma.de");
 
+    }
 
+    @FXML
+    private void onDeleteAll(ActionEvent event) {
+        if(downloadItemList.isEmpty()) return;
+
+        if(DialogUtils.showConfirmDialog("Bestätigen", "Wirklich alles löschen")) {
+            downloadItemContainer.getChildren().clear();
+            downloadItemList.clear();
+            DialogUtils.showInfoDialog("Info", "Alle Downloadfelder gelöscht");
+        }
+    }
 }

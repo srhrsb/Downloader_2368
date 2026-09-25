@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class DownloadItem {
 
     private VBox parent;
+    private HBox hbox;
     private TextField textField;
     private Label downloadProgressLabel;
     private Consumer<DownloadItem> onDeleteCallback;
@@ -41,7 +42,7 @@ public class DownloadItem {
      * Erstellen der Bedienelemente und einbringen in die Oberfläche
      */
     private void init(){
-        HBox hbox = new HBox();
+        hbox = new HBox();
         textField = new TextField();
 
         String lastUrl = App.getController().getTextOfLastDownloadItem();

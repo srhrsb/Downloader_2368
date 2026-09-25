@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 public class Download extends Thread{
 
@@ -11,6 +12,7 @@ public class Download extends Thread{
     private String target;
     private File outputFile;
     private Consumer<Long> onProgress;
+    private static final Logger LOGGER = Logger.getLogger(Download.class.getName());
 
     /**
      * Konstruktor
@@ -23,6 +25,7 @@ public class Download extends Thread{
         this.link = link;
         this.target = target;
         this.onProgress = onProgress;
+        LOGGER.addHandler(App.getLogFileHandler());
     }
 
     /**
