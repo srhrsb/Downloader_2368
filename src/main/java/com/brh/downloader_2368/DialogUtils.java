@@ -45,7 +45,7 @@ public class DialogUtils {
         alert.setHeaderText(null);
         alert.setContentText(text);
 
-        Optional<ButtonType> result =alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
         return result.get() == ButtonType.OK; //nur true wenn ok gedrückt
     }
 

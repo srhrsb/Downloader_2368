@@ -1,5 +1,6 @@
 package com.brh.downloader_2368;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -18,11 +19,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Controller {
-
+    @FXML
+    private Label totalProgress;
     @FXML
     private VBox downloadItemContainer;
     @FXML
     private TextField targetTf;
+
+    private long totalBytes;
 
     private ArrayList<DownloadItem> downloadItemList;
     private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
@@ -37,6 +41,7 @@ public class Controller {
     private void initialize(){
         downloadItemList = new ArrayList<>();
         LOGGER.addHandler( App.getLogFileHandler() );
+
     }
 
     /**
@@ -117,8 +122,17 @@ public class Controller {
             return;
         }
 
-        Download download = new Download(downloadItem.getUrl(), target, downloadItem::updateProgress );
+        Download download = new Download(downloadItem.getUrl(), target,
+                downloadItem::updateProgress, this::updateTotalProgress );
+
         download.start();
+    }
+
+    private void updateTotalProgress( Long bytes){
+        Platform.runLater(()->{
+           totalBytes +=bytes;
+           totalProgress.setText("Gesamtdownload: "+totalBytes);
+        });
     }
 
     @FXML
@@ -127,6 +141,11 @@ public class Controller {
 
     }
 
+    /**
+     * Löscht die Kindelemente der VBOX mit der UI der einzelnen DownloadItems und
+     * die Liste mit DownloadItems
+     * @param event - Clickevent
+     */
     @FXML
     private void onDeleteAll(ActionEvent event) {
         if(downloadItemList.isEmpty()) return;
@@ -136,5 +155,12 @@ public class Controller {
             downloadItemList.clear();
             DialogUtils.showInfoDialog("Info", "Alle Downloadfelder gelöscht");
         }
+    }
+
+    @FXML
+    private void onDeleteAllPaths(ActionEvent event) {
+       for( var item : downloadItemList){
+           item.clearUrl();
+       }
     }
 }

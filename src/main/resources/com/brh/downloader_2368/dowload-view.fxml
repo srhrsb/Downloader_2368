@@ -22,6 +22,11 @@
                              style="-fx-background-color: #ff0000"
                      />
 
+                     <Button mnemonicParsing="false" onAction="#onDeleteAllPaths"
+                             prefHeight="26.0" prefWidth="180.0" text="Alles Download-Pfade Löschen"
+                             style="-fx-background-color: #ff0000"
+                     />
+
                        </children>
              </VBox>
             <VBox fx:id="downloadItemContainer" prefHeight="226.0" prefWidth="454.0" style="-fx-background-color: grey;" />
@@ -34,9 +39,15 @@
             <Button mnemonicParsing="false" onAction="#onSearch" prefHeight="26.0" prefWidth="118.0" text="Suchen" />
          </children>
       </HBox>
-      <Button mnemonicParsing="false" onAction="#onDownload" prefHeight="26.0" prefWidth="579.0" text="Download" />
+
+       <Button mnemonicParsing="false" onAction="#onDownload" prefHeight="26.0" prefWidth="579.0" text="Download" />
+
        <Button mnemonicParsing="false" onAction="#onSupport"
                prefHeight="26.0" prefWidth="118.0" text="Support" />
+
+       <Label fx:id="totalProgress" prefHeight="26.0" prefWidth="300"
+              text="Gesamtdownload: 0" />
+
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

@@ -100,6 +100,10 @@ public class DownloadItem {
         return textField.getText();
     }
 
+    public void clearUrl(){
+        textField.clear();
+    }
+
     /**
      * Aktualisiert den Download-Fortschritt von diesem
      * DownloadItem
