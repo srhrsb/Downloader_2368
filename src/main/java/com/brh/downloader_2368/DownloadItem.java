@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
@@ -21,6 +22,7 @@ public class DownloadItem {
     private VBox parent;
     private HBox hbox;
     private TextField textField;
+    private CheckBox checkbox;
     private Label downloadProgressLabel;
     private Consumer<DownloadItem> onDeleteCallback;
     private Consumer<DownloadItem> onSingleDownloadCallback;
@@ -43,6 +45,10 @@ public class DownloadItem {
      */
     private void init(){
         hbox = new HBox();
+
+        checkbox = new CheckBox();
+        checkbox.setSelected(true);
+
         textField = new TextField();
 
         String lastUrl = App.getController().getTextOfLastDownloadItem();
@@ -59,7 +65,7 @@ public class DownloadItem {
         Button downloadButton = new Button("DL");
 
         parent.getChildren().add(hbox);
-
+        hbox.getChildren().add(checkbox);
         hbox.getChildren().add(textField);
         hbox.getChildren().add(delButton);
         hbox.getChildren().add(downloadButton);
@@ -102,6 +108,10 @@ public class DownloadItem {
 
     public void clearUrl(){
         textField.clear();
+    }
+
+    public boolean isActive(){
+        return checkbox.isSelected();
     }
 
     /**

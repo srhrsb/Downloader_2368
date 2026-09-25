@@ -116,6 +116,11 @@ public class Controller {
     private void singleDownload( DownloadItem downloadItem){
         String target = targetTf.getText();
 
+        if(!downloadItem.isActive()){
+            LOGGER.log(Level.INFO, "Downloadpfad inaktiv - wurde übersprungen");
+            return;
+        }
+
         if( target.isBlank() ) {
             DialogUtils.showErrorDialog("Fehler", "Es wurde kein Zielordner angegeben");
             LOGGER.log(Level.WARNING, "Kein Zielordner - Download kann nicht durchgeführt werden");
